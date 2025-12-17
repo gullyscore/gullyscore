@@ -4,7 +4,15 @@
   <meta charset="UTF-8" />
   <title>GullyScore – Live Village Cricket Scores</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+<script>
+  (function () {
+    var redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect !== location.pathname) {
+      history.replaceState(null, null, redirect);
+    }
+  })();
+</script>
   <style>
     * {
       box-sizing: border-box;
@@ -436,3 +444,4 @@
   </script>
 </body>
 </html>
+
