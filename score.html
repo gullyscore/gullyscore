@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Scoring – GullyScore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(circle at top left, #063a4e, #020815 55%, #010308);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 20px auto;
+      padding: 16px;
+      background: rgba(2,17,30,.92);
+      border-radius: 14px;
+      border: 1px solid #16364b;
+    }
+
+    h2 { margin-top: 0; text-align: center; }
+
+    .score {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .overs {
+      text-align: center;
+      font-size: 14px;
+      color: #cfe8ff;
+      margin-bottom: 12px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg,#00b4d8,#0077b6);
+      color: #02121d;
+    }
+
+    .wicket {
+      background: linear-gradient(135deg,#ff5252,#ff1744);
+      color: #fff;
+    }
+
+    .back {
+      display: block;
+      margin-top: 16px;
+      text-align: center;
+      font-size: 13px;
+      color: #9fb3cc;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2 id="teams">Match</h2>
+
+  <div class="score" id="score">0 / 0</div>
+  <div class="overs" id="overs">Overs: 0.0</div>
+
+  <div class="buttons">
+    <button onclick="addRun(1)">+1</button>
+    <button onclick="addRun(4)">+4</button>
+    <button onclick="addRun(6)">+6</button>
+    <button onclick="addRun(0)">Dot</button>
+    <button class="wicket" onclick="addWicket()">Wicket</button>
+    <button onclick="undo()">Undo</button>
+  </div>
+
+  <a class="back" href="/gullyscore/">⬅ Back to Live</a>
+</div>
+
+<script>
+  let match = JSON.parse(localStorage.getItem("gullyscore_match"));
+
+  if (!match) {
+    alert("No match found");
+    window.location.href = "/gullyscore/";
+  }
+
+  let runs = match.runs;
+  let wickets = match.wickets;
+  let balls = match.balls;
+  let totalOvers = match.overs;
+
+  const history = [];
+
+  document.getElementById("teams").textContent =
+    match.teamA + " vs " + match.teamB;
+
+  function updateUI() {
+    document.getElementById("score").textContent =
+      runs + " / " + wickets;
+
+    const ov = Math.floor(balls / 6);
+    const bl = balls % 6;
+    document.getElementById("overs").textContent =
+      "Overs: " + ov + "." + bl;
+
+    localStorage.setItem("gullyscore_match", JSON.stringify({
+      ...match,
+      runs, wickets, balls
+    }));
+  }
+
+  function addRun(r) {
+    history.push({runs, wickets, balls});
+    runs += r;
+    balls++;
+    checkOver();
+    updateUI();
+  }
+
+  function addWicket() {
+    history.push({runs, wickets, balls});
+    wickets++;
+    balls++;
+    checkOver();
+    updateUI();
+  }
+
+  function undo() {
+    if (!history.length) return;
+    const prev = history.pop();
+    runs = prev.runs;
+    wickets = prev.wickets;
+    balls = prev.balls;
+    updateUI();
+  }
+
+  function checkOver() {
+    if (Math.floor(balls / 6) >= totalOvers) {
+      alert("Innings Completed!");
+    }
+  }
+
+  updateUI();
+</script>
+
+</body>
+</html>
