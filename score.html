@@ -22,7 +22,22 @@
       border: 1px solid #16364b;
     }
 
-    h2 { margin-top: 0; text-align: center; }
+    h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .meta {
+      text-align: center;
+      font-size: 14px;
+      color: #cfe8ff;
+      margin-bottom: 10px;
+    }
+
+    .players {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
 
     .score {
       font-size: 32px;
@@ -77,6 +92,17 @@
 <div class="container">
   <h2 id="teams">Match</h2>
 
+  <div class="meta">
+    🏏 Batting: <span id="battingTeam"></span><br>
+    🎯 Bowling: <span id="bowlingTeam"></span>
+  </div>
+
+  <div class="players">
+    Striker: <b id="strikerName"></b><br>
+    Non-Striker: <b id="nonStrikerName"></b><br>
+    Bowler: <b id="bowlerName"></b>
+  </div>
+
   <div class="score" id="score">0 / 0</div>
   <div class="overs" id="overs">Overs: 0.0</div>
 
@@ -100,15 +126,21 @@
     window.location.href = "/gullyscore/";
   }
 
-  let runs = match.runs;
-  let wickets = match.wickets;
-  let balls = match.balls;
+  let runs = match.runs || 0;
+  let wickets = match.wickets || 0;
+  let balls = match.balls || 0;
   let totalOvers = match.overs;
 
   const history = [];
 
   document.getElementById("teams").textContent =
-    match.teamA + " vs " + match.teamB;
+    match.batting + " vs " + match.bowling;
+
+  document.getElementById("battingTeam").textContent = match.batting;
+  document.getElementById("bowlingTeam").textContent = match.bowling;
+  document.getElementById("strikerName").textContent = match.striker;
+  document.getElementById("nonStrikerName").textContent = match.nonStriker;
+  document.getElementById("bowlerName").textContent = match.bowler;
 
   function updateUI() {
     document.getElementById("score").textContent =
@@ -121,7 +153,9 @@
 
     localStorage.setItem("gullyscore_match", JSON.stringify({
       ...match,
-      runs, wickets, balls
+      runs,
+      wickets,
+      balls
     }));
   }
 
