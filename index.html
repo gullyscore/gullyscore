@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-  <base href="/gullyscore/">
+<head>
   <meta charset="UTF-8" />
   <title>GullyScore – Live Village Cricket Scores</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-<script>
-  (function () {
-    var redirect = sessionStorage.redirect;
-    delete sessionStorage.redirect;
-    if (redirect && redirect !== location.pathname) {
-      history.replaceState(null, null, redirect);
-    }
-  })();
-</script> <head>
-  (function () {
-    var redirect = sessionStorage.redirect;
-    delete sessionStorage.redirect;
-    if (redirect && redirect !== location.pathname) {
-      history.replaceState(null, null, redirect);
-    }
-  })();
-</script>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
 
+  <!-- SPA Redirect Fix for GitHub Pages -->
+  <script>
+    (function () {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect !== location.pathname) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: radial-gradient(circle at top left, #063a4e, #020815 55%, #010308);
       color: #f5f5f5;
     }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    a { text-decoration: none; color: inherit; }
 
     /* NAVBAR */
-
     .nav {
       position: sticky;
       top: 0;
@@ -50,7 +35,6 @@
       background: rgba(3, 10, 22, 0.9);
       border-bottom: 1px solid #133b56;
     }
-
     .nav-inner {
       max-width: 960px;
       margin: 0 auto;
@@ -58,241 +42,80 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .brand { display: flex; gap: 10px; align-items: center; }
     .brand-logo {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
+      width: 34px; height: 34px; border-radius: 50%;
       background: linear-gradient(135deg, #00b4d8, #90e0ef);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #02121d;
-      font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: #02121d;
     }
+    .brand-text-title { font-weight: 600; font-size: 17px; }
+    .brand-text-sub { font-size: 12px; color: #a9ffcb; }
 
-    .brand-text-title {
-      font-weight: 600;
-      font-size: 17px;
-    }
-
-    .brand-text-sub {
-      font-size: 12px;
-      color: #a9ffcb;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 14px;
-    }
-
-    .nav-link {
-      opacity: 0.75;
-    }
-
+    .nav-links { display: flex; gap: 14px; font-size: 14px; }
+    .nav-link { opacity: 0.7; }
     .nav-link.active {
       opacity: 1;
       font-weight: 600;
       border-bottom: 2px solid #00b4d8;
-      padding-bottom: 2px;
     }
 
-    /* MAIN LAYOUT */
-
+    /* LAYOUT */
     .page {
       max-width: 960px;
       margin: 0 auto;
       padding: 14px 16px 32px;
     }
-
     .top-row {
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      grid-template-columns: minmax(0,2fr) minmax(0,1.3fr);
       gap: 14px;
-      margin-bottom: 14px;
     }
-
     @media (max-width: 780px) {
-      .nav-inner {
-        padding-inline: 10px;
-      }
-
-      .top-row {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .top-row { grid-template-columns: 1fr; }
     }
 
     .card {
       background: rgba(2, 17, 30, 0.92);
       border-radius: 14px;
       border: 1px solid #16364b;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      padding: 14px 14px 12px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
+    .card-title { font-size: 15px; font-weight: 600; }
+    .card-sub { font-size: 12px; color: #a3b7cf; }
 
-    .card-title-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .card-title {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    .tag-live {
-      font-size: 11px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: #ff1744;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .card-sub {
-      font-size: 12px;
-      color: #a3b7cf;
-      margin-bottom: 4px;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-      font-size: 11px;
-    }
-
-    .pill {
-      padding: 3px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(144, 224, 239, 0.3);
-      background: rgba(7, 38, 55, 0.8);
-      color: #cbd5f5;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, #00b4d8, #0077b6);
-      color: #02121d;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn-primary span.icon {
-      font-size: 16px;
-    }
-
-    .note {
-      font-size: 11px;
-      color: #9fb3cc;
-      margin-top: 6px;
-    }
-
-    hr.card-divider {
-      border: none;
-      border-top: 1px solid #16364b;
-      margin: 10px 0 8px;
-    }
-
-    /* LIVE SCORE LIST */
-
-    #live-scores {
-      margin-top: 6px;
-      font-size: 13px;
-      min-height: 24px;
-    }
-
-    .empty-text {
-      font-size: 13px;
-      color: #9fb3cc;
-    }
+    #live-scores { margin-top: 10px; font-size: 13px; min-height: 24px; }
+    .empty-text { color: #9fb3cc; }
 
     .match-card {
       display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.1fr);
+      grid-template-columns: 1.6fr 1fr;
       gap: 6px;
-      padding: 9px 10px;
+      padding: 10px;
       margin: 6px 0;
       border-radius: 10px;
       background: radial-gradient(circle at top left, #042638, #020b18);
-      border: 1px solid rgba(0, 180, 216, 0.5);
+      border: 1px solid rgba(0,180,216,.5);
     }
-
     .match-main h3 {
-      margin: 0 0 3px 0;
+      margin: 0 0 4px;
       font-size: 14px;
-      font-weight: 600;
     }
-
-    .match-meta {
-      font-size: 11px;
-      color: #a3b7cf;
-      margin-bottom: 4px;
-    }
-
-    .match-status {
-      font-size: 11px;
-      font-weight: 600;
-      color: #ffee93;
-    }
+    .match-meta { font-size: 11px; color: #a3b7cf; }
+    .match-status { font-size: 11px; font-weight: 600; color: #ffee93; }
 
     .match-score {
       text-align: right;
       font-size: 14px;
       font-weight: 600;
     }
-
     .match-score small {
       display: block;
       font-size: 11px;
       color: #a3b7cf;
-      margin-top: 2px;
     }
-
-    .status-pill {
-      display: inline-block;
-      padding: 2px 7px;
-      border-radius: 999px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: rgba(0, 200, 83, 0.18);
-      border: 1px solid rgba(0, 200, 83, 0.6);
-      color: #b9fbc0;
-      margin-top: 3px;
-    }
-
-    .status-pill.completed {
-      background: rgba(158, 158, 158, 0.2);
-      border-color: rgba(189, 189, 189, 0.7);
-      color: #e0e0e0;
-    }
-
-    /* FOOTER */
 
     .footer {
       max-width: 960px;
@@ -303,157 +126,102 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 6px;
     }
   </style>
 </head>
+
 <body>
-  <!-- NAVBAR -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="brand-logo">GS</div>
-        <div>
-          <div class="brand-text-title">GullyScore</div>
-          <div class="brand-text-sub">Live Village Cricket Scores</div>
-        </div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-logo">GS</div>
+      <div>
+        <div class="brand-text-title">GullyScore</div>
+        <div class="brand-text-sub">Live Village Cricket Scores</div>
       </div>
-      <nav class="nav-links">
-        <a class="nav-link active" href="#">Live</a>
-        <a class="nav-link" href="league.html">League</a>
-        <a class="nav-link" href="https://gullyscore.github.io">Profiles</a>
-      </nav>
     </div>
-  </header>
+    <nav class="nav-links">
+      <a class="nav-link active" href="/">Live</a>
+      <a class="nav-link" href="league.html">League</a>
+      <a class="nav-link" href="profiles.html">Profiles</a>
+    </nav>
+  </div>
+</header>
 
-  <!-- MAIN PAGE -->
-  <main class="page">
-    <div class="top-row">
-      <!-- LEFT CARD: LIVE SCORES -->
-      <section class="card">
-        <div class="card-title-row">
-          <div>
-            <div class="card-title">Live International Cricket</div>
-            <div class="card-sub">Auto-refreshing scores every 15 seconds</div>
-          </div>
-          <div class="tag-live">LIVE</div>
-        </div>
+<main class="page">
+  <div class="top-row">
+    <section class="card">
+      <div class="card-title">Live International Cricket</div>
+      <div class="card-sub">Auto-refresh every 15 seconds</div>
+      <div id="live-scores">Loading live scores…</div>
+    </section>
 
-        <div id="live-scores">Loading live scores…</div>
-      </section>
+    <aside class="card">
+      <div class="card-title">Score your gully matches</div>
+      <div class="card-sub">
+        Ball-by-ball scoring for village & street tournaments.
+      </div>
+      <br />
+      <button onclick="location.href='attack.html'">🏏 Start a local match</button>
+    </aside>
+  </div>
+</main>
 
-      <!-- RIGHT CARD: INFO / ACTIONS -->
-      <aside class="card">
-        <div class="card-title-row">
-          <div class="card-title">Score your gully matches</div>
-        </div>
-        <div class="card-sub">
-          GullyScore helps you score every over for your village &amp; street tournaments.
-        </div>
-        <div class="pill-row">
-          <div class="pill">Ball-by-ball scoring</div>
-          <div class="pill">Auto strike rotation</div>
-          <div class="pill">Basic match stats</div>
-          <div class="pill">Works offline in browser</div>
-        </div>
+<footer class="footer">
+  <div>© <span id="year"></span> GullyScore</div>
+  <div>Powered by public cricket APIs</div>
+</footer>
 
-        <button class="btn-primary" onclick="window.location.href='attack.html'">
-          <span class="icon">🏏</span>
-          <span>Start a local match</span>
-        </button>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-        <hr class="card-divider" />
+  // 🔴 PUT YOUR REAL API KEY HERE
+  const API_KEY = "043a7e78-44d0-4eac-a4fa-532da953fe35";
 
-        <div class="note">
-          Tip: On Android, open menu → <b>Add to Home screen</b> to use GullyScore like an app.
-        </div>
-      </aside>
-    </div>
-  </main>
+  async function loadLiveScores() {
+    const box = document.getElementById("live-scores");
+    box.innerHTML = "Loading live scores…";
 
-  <footer class="footer">
-    <div>© <span id="year"></span> GullyScore. Built for village cricketers.</div>
-    <div>Powered by public cricket data APIs.</div>
-  </footer>
+    try {
+      const res = await fetch(
+        https://cricketdata.org/api/match/live?apikey=${API_KEY}
+      );
+      const json = await res.json();
 
-  <!-- LIVE SCORE SCRIPT -->
-  <script>
-    // Year in footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // 👉 IMPORTANT: Ikkada nee CricketData.org API key pettaali
-    // Example: const API_KEY = "043a7e78-xxxx-xxxx-xxxx-da953fe35";
-    const API_KEY = "043a7e78-44d0-4eac-a4fa-532da953fe35";
-
-    async function loadLiveScores() {
-      const box = document.getElementById("live-scores");
-      box.innerHTML = "Loading live scores…";
-
-      try {
-        const res = await fetch(
-          https://cricketdata.org/api/match/live?apikey=${API_KEY}
-        );
-        const data = await res.json();
-
-        if (!data || !data.data || data.data.length === 0) {
-          box.innerHTML =
-            '<div class="empty-text">No live matches right now. Check back soon.</div>';
-          return;
-        }
-
-        box.innerHTML = "";
-
-        data.data.forEach((match) => {
-          const card = document.createElement("div");
-          card.className = "match-card";
-
-          const teams = match.teams || "";
-          const status = match.status || "";
-          const mtype = match.match_type || "";
-          const score = match.score || "";
-          const venue = match.venue || "";
-
-          const main = document.createElement("div");
-          main.className = "match-main";
-          main.innerHTML = `
-            <h3>${teams}</h3>
-            <div class="match-meta">${mtype || "Match"} • ${venue || "Venue TBA"}</div>
-            <div class="match-status">${status}</div>
-            <span class="status-pill ${
-              status.toLowerCase().includes("stumps") ||
-              status.toLowerCase().includes("won")
-                ? "completed"
-                : ""
-            }">
-              ${status.toLowerCase().includes("won") ? "RESULT" : "LIVE"}
-            </span>
-          `;
-
-          const right = document.createElement("div");
-          right.className = "match-score";
-          right.innerHTML = `
-            ${score || "Score TBA"}
-            <small>Updated just now</small>
-          `;
-
-          card.appendChild(main);
-          card.appendChild(right);
-          box.appendChild(card);
-        });
-      } catch (err) {
-        console.error(err);
+      if (!json?.data?.length) {
         box.innerHTML =
-          '<div class="empty-text">Error loading live scores. Please refresh.</div>';
+          '<div class="empty-text">No live matches right now.</div>';
+        return;
       }
-    }
 
-    // First call + interval
-    loadLiveScores();
-    setInterval(loadLiveScores, 15000);
-  </script>
+      box.innerHTML = "";
+
+      json.data.forEach(m => {
+        const div = document.createElement("div");
+        div.className = "match-card";
+        div.innerHTML = `
+          <div class="match-main">
+            <h3>${m.teams || "Teams TBA"}</h3>
+            <div class="match-meta">${m.match_type || ""} • ${m.venue || ""}</div>
+            <div class="match-status">${m.status || "LIVE"}</div>
+          </div>
+          <div class="match-score">
+            ${m.score || "Score TBA"}
+            <small>Updated now</small>
+          </div>
+        `;
+        box.appendChild(div);
+      });
+    } catch (e) {
+      box.innerHTML =
+        '<div class="empty-text">Error loading scores.</div>';
+    }
+  }
+
+  loadLiveScores();
+  setInterval(loadLiveScores, 15000);
+</script>
+
 </body>
 </html>
-
-
-
-
