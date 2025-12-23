@@ -226,9 +226,48 @@
 <p style="opacity:0.7;font-size:14px;">
 No live matches right now. Showing demo score.
 </p>
-</body>
+</body> <script>
+  // DEMO MATCH DATA (temporary)
+  const demoMatch = {
+    title: "Gully Demo Match",
+    score: "IND 107/2 (10.4)",
+    batting: [
+      { name: "Rohit", runs: 45, balls: 32, fours: 5, sixes: 2 },
+      { name: "Gill", runs: 52, balls: 41, fours: 6, sixes: 1 }
+    ]
+  };
+
+  // Replace loading text
+  const liveBox = document.querySelector(".live-card, .live-score, #liveScore");
+  if (liveBox) {
+    liveBox.innerHTML = `
+      <h3>${demoMatch.title}</h3>
+      <p style="font-size:18px;font-weight:bold;">${demoMatch.score}</p>
+      <table style="width:100%;margin-top:10px;font-size:14px;">
+        <tr>
+          <th align="left">Batsman</th>
+          <th>R</th>
+          <th>B</th>
+          <th>4s</th>
+          <th>6s</th>
+        </tr>
+        ${demoMatch.batting.map(b => `
+          <tr>
+            <td>${b.name}</td>
+            <td align="center">${b.runs}</td>
+            <td align="center">${b.balls}</td>
+            <td align="center">${b.fours}</td>
+            <td align="center">${b.sixes}</td>
+          </tr>
+        `).join("")}
+      </table>
+      <p style="opacity:0.7;margin-top:8px;">Demo score – live API coming soon</p>
+    `;
+  }
+</script>
 </html>
 <script>
+
 
 
 
