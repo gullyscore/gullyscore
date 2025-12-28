@@ -1,4 +1,5 @@
-hi<!DOCTYPE html>
+
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -128,50 +129,7 @@ hi<!DOCTYPE html>
       flex-wrap: wrap;
     }
   </style>
-</head> <script>
-  const demoMatch = {
-    title: "Gully Demo Match",
-    score: "IND 107/2 (10.4)",
-    batting: [
-      { name: "Rohit", runs: 45, balls: 32, fours: 5, sixes: 2 },
-      { name: "Gill", runs: 52, balls: 41, fours: 6, sixes: 1 }
-    ]
-  };
-
-  const box = document.getElementById("demoLiveScore");
-
-  if (box) {
-    box.innerHTML = `
-      <h3>${demoMatch.title}</h3>
-      <p style="font-size:18px;font-weight:bold;margin:6px 0;">
-        ${demoMatch.score}
-      </p>
-
-      <table style="width:100%;font-size:14px;border-collapse:collapse;">
-        <tr>
-          <th align="left">Batsman</th>
-          <th>R</th>
-          <th>B</th>
-          <th>4s</th>
-          <th>6s</th>
-        </tr>
-        ${demoMatch.batting.map(b => `
-          <tr>
-            <td>${b.name}</td>
-            <td align="center">${b.runs}</td>
-            <td align="center">${b.balls}</td>
-            <td align="center">${b.fours}</td>
-            <td align="center">${b.sixes}</td>
-          </tr>
-        `).join("")}
-      </table>
-
-      <p style="opacity:0.7;font-size:12px;margin-top:6px;">
-        Demo score (API coming soon)
-      </p>
-    `;
-  }
-</script>
+</head>
 
 <body>
 
@@ -185,10 +143,10 @@ hi<!DOCTYPE html>
       </div>
     </div>
     <nav class="nav-links">
-  <a class="nav-link active" href="/gullyscore/">Live</a>
-  <a class="nav-link" href="/gullyscore/league.html">League</a>
-  <a class="nav-link" href="/gullyscore/profiles.html">Profiles</a>
-</nav>
+      <a class="nav-link active" href="/">Live</a>
+      <a class="nav-link" href="league.html">League</a>
+      <a class="nav-link" href="profiles.html">Profiles</a>
+    </nav>
   </div>
 </header>
 
@@ -228,7 +186,7 @@ hi<!DOCTYPE html>
 
     try {
       const res = await fetch(
-        https://cricketdata.org/api/match/live?apikey=${API_KEY}
+        `https://cricketdata.org/api/match/live?apikey=${API_KEY}`
       );
       const json = await res.json();
 
@@ -262,78 +220,9 @@ hi<!DOCTYPE html>
     }
   }
 
-  
-<script src="https://cdorgapi.b-cdn.net/widgets/vmatchlist.js"></script>
-<p style="opacity:0.7;font-size:14px;">
-No live matches right now. Showing demo score.
-</p>
-</body> <script>
-  // DEMO MATCH DATA (temporary)
-  const demoMatch = {
-    title: "Gully Demo Match",
-    score: "IND 107/2 (10.4)",
-    batting: [
-      { name: "Rohit", runs: 45, balls: 32, fours: 5, sixes: 2 },
-      { name: "Gill", runs: 52, balls: 41, fours: 6, sixes: 1 }
-    ]
-  };
-
-  // Replace loading text
-  const liveBox = document.querySelector(".live-card, .live-score, #liveScore");
-  if (liveBox) {
-    liveBox.innerHTML = `
-      <h3>${demoMatch.title}</h3>
-      <p style="font-size:18px;font-weight:bold;">${demoMatch.score}</p>
-      <table style="width:100%;margin-top:10px;font-size:14px;">
-        <tr>
-          <th align="left">Batsman</th>
-          <th>R</th>
-          <th>B</th>
-          <th>4s</th>
-          <th>6s</th>
-        </tr>
-        ${demoMatch.batting.map(b => `
-          <tr>
-            <td>${b.name}</td>
-            <td align="center">${b.runs}</td>
-            <td align="center">${b.balls}</td>
-            <td align="center">${b.fours}</td>
-            <td align="center">${b.sixes}</td>
-          </tr>
-        `).join("")}
-      </table>
-      <p style="opacity:0.7;margin-top:8px;">Demo score – live API coming soon</p>
-    `;
-  }
+  loadLiveScores();
+  setInterval(loadLiveScores, 15000);
 </script>
-</html> 
-</body>
-<script src="script.js"></script>
-</html>
-<script>
-  <!DOCTYPE html>
-<html>
-<head>
-  <title>GullyScore – Live Village Cricket Scores</title>
-</head>
 
-<body>
-
-  <h2>Live Match</h2>
-  <div id="liveScore">Loading live score...</div>
-
-  <!-- ONLY ONE SCRIPT -->
-  <script src="script.js"></script>
 </body>
 </html>
-  
-
-
-
-
-
-
-
-
-
-
